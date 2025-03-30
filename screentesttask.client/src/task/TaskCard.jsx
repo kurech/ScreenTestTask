@@ -8,8 +8,8 @@ export default function TaskCard({ task, onUpdate, onDelete }) {
     const [taskType, setTaskType] = useState(task.type);
 
     const handleUpdateText = async () => {
-        if (editedText === "") {
-            alert("Заполните текст задачи");
+        if (!editedText.trim()) {
+            alert("Увы, вы ввели пустую задачу");
             return;
         }
 
