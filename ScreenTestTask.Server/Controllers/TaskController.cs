@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ScreenTestTask.Server.Models;
+using System.Text.Json;
 
 namespace ScreenTestTask.Server.Controllers
 {
@@ -24,6 +25,8 @@ namespace ScreenTestTask.Server.Controllers
         [HttpPatch]
         public async Task<IActionResult> PatchTask([FromBody] Models.Task inputTask)
         {
+            Console.WriteLine($"Received: {JsonSerializer.Serialize(inputTask)}");
+
             if (inputTask.Id == Guid.Empty)
                 return BadRequest("Id задачи некорректно!");
 
@@ -75,7 +78,7 @@ namespace ScreenTestTask.Server.Controllers
             await _context.Tasks.AddAsync(task);
             await _context.SaveChangesAsync();
 
-            return Created();
+            return StatusCode(201, task);
         }
     }
 }
